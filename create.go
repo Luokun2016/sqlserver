@@ -114,7 +114,7 @@ func Create(db *gorm.DB) {
 	}
 
 	if !db.DryRun && db.Error == nil {
-		if len(db.Statement.Schema.FieldsWithDefaultDBValue) > 0 {
+		if db.Statement.Schema != nil && len(db.Statement.Schema.FieldsWithDefaultDBValue) > 0 {
 			rows, err := db.Statement.ConnPool.QueryContext(db.Statement.Context, db.Statement.SQL.String(), db.Statement.Vars...)
 
 			if err == nil {
